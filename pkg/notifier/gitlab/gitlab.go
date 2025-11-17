@@ -20,7 +20,7 @@ type API interface {
 	GetLabel(labelName string, options ...gitlab.RequestOptionFunc) (*gitlab.Label, *gitlab.Response, error)
 	UpdateLabel(opt *gitlab.UpdateLabelOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Label, *gitlab.Response, error)
 	GetCommit(sha string, options ...gitlab.RequestOptionFunc) (*gitlab.Commit, *gitlab.Response, error)
-	ListMergeRequestsByCommit(sha string, options ...gitlab.RequestOptionFunc) ([]*gitlab.MergeRequest, *gitlab.Response, error)
+	ListMergeRequestsByCommit(sha string, options ...gitlab.RequestOptionFunc) ([]*gitlab.BasicMergeRequest, *gitlab.Response, error)
 }
 
 // GitLab represents the attribute information necessary for requesting GitLab API
@@ -61,7 +61,7 @@ func (g *GitLab) PostCommitComment(sha string, opt *gitlab.PostCommitCommentOpti
 
 // AddMergeRequestLabels adds labels on the merge request.
 func (g *GitLab) AddMergeRequestLabels(labels *[]string, mergeRequest int) (gitlab.Labels, error) {
-	var addLabels gitlab.Labels
+	var addLabels gitlab.LabelOptions
 	for _, label := range *labels {
 		addLabels = append(addLabels, label)
 	}
@@ -75,7 +75,7 @@ func (g *GitLab) AddMergeRequestLabels(labels *[]string, mergeRequest int) (gitl
 
 // RemoveMergeRequestLabels removes labels on the merge request.
 func (g *GitLab) RemoveMergeRequestLabels(labels *[]string, mergeRequest int) (gitlab.Labels, error) {
-	var removeLabels gitlab.Labels
+	var removeLabels gitlab.LabelOptions
 	for _, label := range *labels {
 		removeLabels = append(removeLabels, label)
 	}
@@ -103,14 +103,14 @@ func (g *GitLab) GetLabel(labelName string, options ...gitlab.RequestOptionFunc)
 
 // UpdateLabel is a wrapper of https://pkg.go.dev/gitlab.com/gitlab-org/api/client-go#LabelsService.UpdateLabel
 func (g *GitLab) UpdateLabel(opt *gitlab.UpdateLabelOptions, options ...gitlab.RequestOptionFunc) (*gitlab.Label, *gitlab.Response, error) {
-	return g.Client.Labels.UpdateLabel(fmt.Sprintf("%s/%s", g.namespace, g.project), opt, options...)
+	return g.Client.Labels.UpdateLabel(fmt.Sprintf("%s/%s", g.namespace, g.project), nil, opt, options...)
 }
 
 // GetCommit is a wrapper of https://pkg.go.dev/gitlab.com/gitlab-org/api/client-go#CommitsService.GetCommit
 func (g *GitLab) GetCommit(sha string, options ...gitlab.RequestOptionFunc) (*gitlab.Commit, *gitlab.Response, error) {
-	return g.Client.Commits.GetCommit(fmt.Sprintf("%s/%s", g.namespace, g.project), sha, options...)
+	return g.Client.Commits.GetCommit(fmt.Sprintf("%s/%s", g.namespace, g.project), sha, &gitlab.GetCommitOptions{}, options...)
 }
 
-func (g *GitLab) ListMergeRequestsByCommit(sha string, options ...gitlab.RequestOptionFunc) ([]*gitlab.MergeRequest, *gitlab.Response, error) {
+func (g *GitLab) ListMergeRequestsByCommit(sha string, options ...gitlab.RequestOptionFunc) ([]*gitlab.BasicMergeRequest, *gitlab.Response, error) {
 	return g.Client.Commits.ListMergeRequestsByCommit(fmt.Sprintf("%s/%s", g.namespace, g.project), sha, options...)
 }

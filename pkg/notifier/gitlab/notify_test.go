@@ -131,7 +131,7 @@ func TestNotifyNotify(t *testing.T) { //nolint:maintidx
 			name: "valid, and isRevision",
 			createMockGitLabAPI: func(ctrl *gomock.Controller) *gitlabmock.MockAPI {
 				api := gitlabmock.NewMockAPI(ctrl)
-				api.EXPECT().ListMergeRequestsByCommit("revision-revision").Return([]*gitlab.MergeRequest{{IID: 1}}, nil, nil)
+				api.EXPECT().ListMergeRequestsByCommit("revision-revision").Return([]*gitlab.BasicMergeRequest{{IID: 1}}, nil, nil)
 				api.EXPECT().CreateMergeRequestNote(1, gomock.Any()).Return(nil, nil, nil)
 				return api
 			},
@@ -264,7 +264,7 @@ func TestNotifyNotify(t *testing.T) { //nolint:maintidx
 			name: "get MR IID when MR number is 0",
 			createMockGitLabAPI: func(ctrl *gomock.Controller) *gitlabmock.MockAPI {
 				api := gitlabmock.NewMockAPI(ctrl)
-				api.EXPECT().ListMergeRequestsByCommit("revision").Return([]*gitlab.MergeRequest{{IID: 1}}, nil, nil)
+				api.EXPECT().ListMergeRequestsByCommit("revision").Return([]*gitlab.BasicMergeRequest{{IID: 1}}, nil, nil)
 				api.EXPECT().CreateMergeRequestNote(1, gomock.Any()).Return(nil, nil, nil)
 				return api
 			},
