@@ -10,7 +10,6 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/suzuki-shunsuke/go-findconfig v1.1.0
 	github.com/urfave/cli/v2 v2.4.0
-	github.com/xanzy/go-gitlab v0.115.0
 	gitlab.com/gitlab-org/api/client-go v0.160.0
 	go.uber.org/mock v0.6.0
 	gopkg.in/yaml.v2 v2.4.0
