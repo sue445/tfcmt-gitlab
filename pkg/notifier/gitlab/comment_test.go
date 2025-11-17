@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	gitlabmock "github.com/hirosassa/tfcmt-gitlab/pkg/notifier/gitlab/gen"
-	gitlab "github.com/xanzy/go-gitlab"
+	gitlab "gitlab.com/gitlab-org/api/client-go"
 	"go.uber.org/mock/gomock"
 )
 
