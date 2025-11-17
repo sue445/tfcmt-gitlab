@@ -1,6 +1,6 @@
 module github.com/hirosassa/tfcmt-gitlab
 
-go 1.18
+go 1.24
 
 require (
 	github.com/Masterminds/sprig/v3 v3.2.2
