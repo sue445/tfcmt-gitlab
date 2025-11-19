@@ -4,7 +4,7 @@ import (
 	"github.com/hirosassa/tfcmt-gitlab/pkg/notifier"
 	"github.com/hirosassa/tfcmt-gitlab/pkg/terraform"
 	"github.com/sirupsen/logrus"
-	gitlab "github.com/xanzy/go-gitlab"
+	gitlab "gitlab.com/gitlab-org/api/client-go"
 )
 
 // NotifyService handles communication with the notification related
